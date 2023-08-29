@@ -1,5 +1,5 @@
 import { Statistics } from './Statistics/Statistics';
-import { FeedbackOptions } from './Feedback/FeedbackOptions';
+import { FeedbackOptions } from './FeedbackOptions/FeedbackOptions';
 import { Component } from 'react';
 import { Section } from './Section/Section';
 import { Notification } from './Notification/Notification';
@@ -10,22 +10,20 @@ export class App extends Component {
     neutral: 0,
     bad: 0,
   };
-  addFeedback = evt => {
-    this.setState(state => {
-      return (state[evt.target.value] += 1);
-    });
+  addFeedback = option => {
+    this.setState(prevState => ({ [option]: prevState[option] + 1 }));
   };
   countTotalFeedback() {
-    return this.state.good + this.state.bad + this.state.neutral;
+    return Object.values(this.state).reduce((acc, val) => acc + val, 0);
   }
   countPositiveFeedbackPercentage() {
-    return this.state.good === 0
-      ? 0
-      : (this.state.good / this.countTotalFeedback()) * 100;
+    const { good } = this.state;
+    const total = this.countTotalFeedback();
+    return good === 0 ? 0 : (good / total) * 100;
   }
   render() {
     const { good, bad, neutral } = this.state;
-
+    const total = this.countTotalFeedback();
     return (
       <div
         style={{
@@ -41,23 +39,23 @@ export class App extends Component {
       >
         <Section title={'Please provide feedback'}>
           <FeedbackOptions
-            options={this.state}
+            options={Object.keys(this.state)}
             onLeaveFeedback={this.addFeedback}
-          ></FeedbackOptions>
+          />
         </Section>
 
-        {Object.values(this.state).some(e => e !== 0) ? (
+        {total !== 0 ? (
           <Section title={'Statistics'}>
             <Statistics
               good={good}
               neutral={neutral}
               bad={bad}
-              total={this.countTotalFeedback()}
+              total={total}
               positivePercentage={this.countPositiveFeedbackPercentage()}
-            ></Statistics>
+            />
           </Section>
         ) : (
-          <Notification message={'There is no feedback yet...'}></Notification>
+          <Notification message={'There is no feedback yet...'} />
         )}
       </div>
     );
