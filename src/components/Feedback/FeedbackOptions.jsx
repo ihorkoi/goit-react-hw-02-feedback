@@ -1,16 +1,11 @@
 import { Component } from 'react';
-import { Option } from './FeedbackOptions.styled';
+import { Option, List } from './FeedbackOptions.styled';
 
 export class FeedbackOptions extends Component {
   render() {
     const { options, onLeaveFeedback } = this.props;
     return (
-      <ul
-        style={{
-          display: 'flex',
-          gap: 15,
-        }}
-      >
+      <List>
         {Object.keys(options).map(value => {
           return (
             <li key={value}>
@@ -20,7 +15,7 @@ export class FeedbackOptions extends Component {
             </li>
           );
         })}
-      </ul>
+      </List>
     );
   }
 }

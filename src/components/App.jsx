@@ -31,6 +31,10 @@ export class App extends Component {
         style={{
           height: '100vh',
           margin: '0 auto',
+          padding: '32px',
+          display: 'flex',
+          flexDirection: 'column',
+          textAlign: 'center',
           fontSize: 40,
           color: '#010101',
         }}
