@@ -1,18 +1,6 @@
 import { Component } from 'react';
 
 export class Statistics extends Component {
-  //   state = {
-  //     total: 0,
-  //     ...this.props,
-  //   };
-  //   countTotalFeedback = () => {
-  //     console.log(this.state);
-  //     this.setState(state => {
-  //       return {
-  //         total: state.stats.good + state.stats.bad + state.stats.neutral,
-  //       };
-  //     });
-  //   };
   render() {
     return (
       <ul>
